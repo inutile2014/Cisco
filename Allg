@@ -1,0 +1,18 @@
+Router verwenden das Internet-Protokoll (IP), um sich mit Netzwerken zu verbinden.
+OSPF (Open Shortest Path First) ist das Router-Protokoll, das verwendet wird,
+um den Weg zu ermitteln, mit dem die Pakete am effizientesten durch die
+verschiedenen verbundenen Netzwerke transportiert werden können. 
+OSPF wurde von der Internet Engineering Task Force (IETF) als eines von mehreren Interior-Gateway-Protokollen festgelegt.
+Diese Protokolle sind für den Datenverkehr innerhalb großer autonomer Netzwerke ausgelegt, zum Beispiel für das Netzwerk eines 
+einzelnen Unternehmens, das wieder aus mehreren lokalen Netzwerken bestehen kann, die über Router miteinander verbunden sind.
+
+Aus <https://www.google.ch/search?q=OSPF&oq=OSPF&aqs=chrome..69i57j0l5.391j0j7&sourceid=chrome&ie=UTF-8> 
+
+
+EIGRP (Enhanced Interior Gateway Routing Protocol) ist ein Netzwerkprotokoll, mit dem Router Informationen effizienter
+als mit älteren Netzwerkprotokollen austauschen können. EIGRP hat sich aus IGRP (Interior Gateway Routing Protocol) entwickelt.
+Verwenden Router entweder EIGRP oder IGRP, dann sind sie zueinander kompatibel. Die Metriken oder Kriterien für die Auswahl der
+Route lassen sich in die jeweiligen Metriken des anderen Protokolls übersetzen. EIGRP ist nicht nur für IP (Internet Protocol) nutzbar,
+sondern auch für AppleTalk oder in Netzwerken mit Novells NetWare.
+
+Aus <http://www.searchnetworking.de/definition/EIGRP-Enhanced-Interior-Gateway-Routing-Protocol> 
