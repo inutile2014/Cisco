@@ -1,18 +1,133 @@
-Router verwenden das Internet-Protokoll (IP), um sich mit Netzwerken zu verbinden.
-OSPF (Open Shortest Path First) ist das Router-Protokoll, das verwendet wird,
-um den Weg zu ermitteln, mit dem die Pakete am effizientesten durch die
-verschiedenen verbundenen Netzwerke transportiert werden können. 
-OSPF wurde von der Internet Engineering Task Force (IETF) als eines von mehreren Interior-Gateway-Protokollen festgelegt.
-Diese Protokolle sind für den Datenverkehr innerhalb großer autonomer Netzwerke ausgelegt, zum Beispiel für das Netzwerk eines 
-einzelnen Unternehmens, das wieder aus mehreren lokalen Netzwerken bestehen kann, die über Router miteinander verbunden sind.
+-> All Commands: https://www.cisco.com/c/en/us/td/docs/ios/fundamentals/command/reference/cf_book.pdf
 
+https://boubakr92.wordpress.com/2013/09/16/ccna-cheat-sheet-part-1/ 
+Router Modes:
+	• who: zeigt eingeloggte Benutzer
+	• Router>:  User mode = Limited to basic monitoring commands
+	• Router#: Privileged mode (exec-level(15) mode) = Provides access to all other router commands
+	• Router(config)#: global configuration mode = Commands that affect the entire system
+	• Router(config-if)#: interface mode = Commands that affect interfaces
+	• Router(config-subif)#: subinterface mode = Commands that affect subinterfaces
+	• Router(config-line)#: line mode = Commands that affect in lines modes (console, vty, aux…)
+	• Router(config-router)#: router configuration mode
+	
+Configuring Router-On-Stick for vlan routing:
+R1(config)# interface fastEthernet 0/0
+R1(config-if)# no shutdown
+R1(config)# interface fastEthernet 0/0.10
+R1(config-subif)# encapsulation dot1q 10
+R1(config-subif)# ip address 192.168.10.1 255.255.255.0
+R1(config-subif)# interface fastEthernet 0/0.20
+R1(config-subif)# encapsulation dot1q 20
+R1(config-subif)# ip address 192.168.20.1 255.255.255.0
+
+RIPv2 Verification:
+Shows information about the running routing protocol process:
+	• R1# show ip protocols
+Shows the entire routing table:
+	• R1# show ip route
+Shows routes learned via RIP only:
+	• R1# show ip route rip
+Shows detailed information about the route to the specified destination network:
+	• R1# show ip route 10.1.1.1
+
+
+
+
+Switch Modes:
+	• Zeigt die informationen der Switchversion, RAM, NVRAM, flash, IOS, etc.
+		SW1# show version
+	• Zeigt die Konfigurationen in der DRAM(Memory für das OS und für die I/O Memory).
+		SW1# show running-config
+	• Zeigt die Konfigurationen in der NVRAM(Hat die Startkonfiguration gesichert).
+		SW1# show startup-config
+	• Gleich wie bei UNIX.
+		SW1# show history
+	• Shows an overview of all interfaces, their physical status, protocol status and ip address if assigned.
+		SW1# show ip interface brief
+	• Shows detailed information about the specified interface, its status, protocol, duplex, speed, encapsulation, last 5 min traffic.
+		SW1# show interface vlan 1
+	• Shows the description of all interfaces
+		SW1# show interfaces description
+	• Shows the status of all interfaces like connected or not, speed, duplex, trunk or access vlan.
+		SW1# show interfaces status
+	• Shows information about the leased IP address (when an interface is configured to get IP address via a dhcp server)
+		SW1# show dhcp lease
+
+
+Switch Änderung von Hostname:
+	• Switch# configured terminal
+	• Switch(config)# hostname SW1 
+Passwort setzen + User erstellen:
+	• SW1(config)# username admin password cisco
+	• SW1(config)# enable secret cisco    ! MD5 hash
+	• SW1(config)# enable password notcisco    ! Clear text
+Port Passwort geschützt:
+	• SW1(config)# line con 0
+	• SW1(config-line)# password cisco
+	• SW1(config-line)# login
+Connection öffnen, welche via zB ssh,telnet usw zugegriffen werden können
+	• SW1(config)# line vty 0 4(es sind 5 Connection möglich)
+	• SW1(config-line)# password cisco
+	• SW1(config-line)# login
+IP Adresse an VLAN zuteilen:
+	• SW1(config)# interface vlan 1
+	• SW1(config-if)# ip address 172.16.1.11 255.255.255.0   oder wird via DHCP zugeteilt
+	• SW1(config-if)# no shutdown
+Gateway definierten:
+	• SW1(config)# ip default-gateway 172.16.1.1
+Konfiguration Speichern
+	• SW1# copy running-config startup-config
+		Destination filename [startup-config]?    ! Press enter to confirm file name.
+		Building configuration…
+		[OK]
+ 
+		! Short for write memory.
+	• SW1# wr
+		Building configuration…
+		[OK]
+		
+Make the switch interface as access port:
+	• SW1(config-if)# switchport mode access
+Enable port security on the interface:
+	• SW1(config-if)# switchport port-security
+Specify the maximum number of allowed MAC addresses:
+	• SW1(config-if)# switchport port-security maximum 1
+Define the action to take when violation occurs:
+	• SW1(config-if)# switchport port-security violation shutdown    ! options: shutdown, protect, restrict
+
+
+
+Verify and troubleshoot port security:
+Shows the entries of the mac address table:
+	• SW1# show mac-address-table
+Overview of port security of all interfaces:
+	• SW1# show port-security
+Shows detailed information about port security on the specified interface:
+	• SW1# show port-security interface fa0/5 -> FA = Interface /5 = Port
+
+
+Configuring Trunks:
+
+SW1(config)# interface fastEthernet 0/1
+SW1(config-if)# switchport mode trunk    ! options: access, trunk, dynamic auto, dynamic desirable
+SW1(config-if)# switchport trunk allowed vlan add 10    ! options: add, remove, all, except
+
+   
+Router verwenden das Internet-Protokoll (IP), um sich mit Netzwerken zu verbinden.
+OSPF (Open Shortest Path First) ist das Router-Protokoll, das verwendet wird, um 
+den Weg zu ermitteln, mit dem die Pakete am effizientesten durch die verschiedenen 
+verbundenen Netzwerke transportiert werden können. OSPF wurde von der 
+Internet Engineering Task Force (IETF) als eines von mehreren Interior-Gateway-Protokollen festgelegt. 
+Diese Protokolle sind für den Datenverkehr innerhalb großer autonomer Netzwerke ausgelegt, zum Beispiel für 
+das Netzwerk eines einzelnen Unternehmens, das wieder aus mehreren lokalen Netzwerken bestehen kann, die über 
+Router miteinander verbunden sind.
 Aus <https://www.google.ch/search?q=OSPF&oq=OSPF&aqs=chrome..69i57j0l5.391j0j7&sourceid=chrome&ie=UTF-8> 
 
-
-EIGRP (Enhanced Interior Gateway Routing Protocol) ist ein Netzwerkprotokoll, mit dem Router Informationen effizienter
-als mit älteren Netzwerkprotokollen austauschen können. EIGRP hat sich aus IGRP (Interior Gateway Routing Protocol) entwickelt.
-Verwenden Router entweder EIGRP oder IGRP, dann sind sie zueinander kompatibel. Die Metriken oder Kriterien für die Auswahl der
-Route lassen sich in die jeweiligen Metriken des anderen Protokolls übersetzen. EIGRP ist nicht nur für IP (Internet Protocol) nutzbar,
-sondern auch für AppleTalk oder in Netzwerken mit Novells NetWare.
+EIGRP (Enhanced Interior Gateway Routing Protocol) ist ein Netzwerkprotokoll, mit dem Router Informationen effizienter als mit
+älteren Netzwerkprotokollen austauschen können. EIGRP hat sich aus IGRP (Interior Gateway Routing Protocol) entwickelt. 
+Verwenden Router entweder EIGRP oder IGRP, dann sind sie zueinander kompatibel. Die Metriken oder Kriterien für die Auswahl 
+der Route lassen sich in die jeweiligen Metriken des anderen Protokolls übersetzen. EIGRP ist nicht nur für IP (Internet Protocol) 
+nutzbar, sondern auch für AppleTalk oder in Netzwerken mit Novells NetWare.
 
 Aus <http://www.searchnetworking.de/definition/EIGRP-Enhanced-Interior-Gateway-Routing-Protocol> 
